@@ -7,7 +7,6 @@ def _update_map(map, row, column):
 
 def get_map():
     with open('Day6_map.txt', 'r') as map:
-    # with open('Day6_testmap.txt', 'r') as map:
         return map.read().splitlines()
 
 def get_start_position(map):
