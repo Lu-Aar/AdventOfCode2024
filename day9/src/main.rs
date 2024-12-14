@@ -101,23 +101,36 @@ fn compacting_data_2(data: &Vec<String>) -> Vec<String> {
     temp_data
 }
 
-fn calculate_checkum(data: Vec<String>) -> u128 {
-    let mut checksum: u128 = 0;
-    let integers: Vec<u32> = data
-        .iter()
-        .map(|s| {
-            if s == "." {
+// fn calculate_checksum(data: Vec<String>) -> u128 {
+//     let mut checksum: u128 = 0;
+//     let integers: Vec<u32> = data
+//         .iter()
+//         .map(|s| {
+//             if s == "." {
+//                 0
+//             } else {
+//                 s.parse::<u32>().unwrap()
+//             }
+//         })
+//         .collect();
+
+//     for (ii, _) in data.iter().enumerate() {
+//         checksum += ii as u128 * integers[ii] as u128;
+//     }
+//     checksum
+// }
+
+fn calculate_checksum(data: Vec<String>) -> u128 {
+    data.iter()
+        .enumerate()
+        .map(|(ii, ch)| {
+            if ch == "." {
                 0
             } else {
-                s.parse::<u32>().unwrap()
+                ii as u128 * ch.parse::<u128>().unwrap()
             }
         })
-        .collect();
-
-    for (ii, _) in data.iter().enumerate() {
-        checksum += ii as u128 * integers[ii] as u128;
-    }
-    checksum
+        .sum()
 }
 
 fn string_to_array(data: &str) -> Vec<String> {
@@ -133,8 +146,8 @@ fn main() {
     let compacted_data_2 = compacting_data_2(&data_blocks);
     // println!("{:?}", compacted_data);
     // println!("{:?}", compacted_data_2);
-    let checksum: u128 = calculate_checkum(compacted_data);
-    let checksum_2: u128 = calculate_checkum(compacted_data_2);
+    let checksum: u128 = calculate_checksum(compacted_data);
+    let checksum_2: u128 = calculate_checksum(compacted_data_2);
     println!("checksum: {}", checksum);
     println!("checksum: {}", checksum_2);
 }
